@@ -1,6 +1,5 @@
 import 'package:demo_provider_mvvm/src/common/screens/not_found.dart';
-import 'package:demo_provider_mvvm/src/modules/home/view/home_screen.dart';
-import 'package:demo_provider_mvvm/src/modules/profile/view/profile_screen.dart';
+import 'package:demo_provider_mvvm/src/modules/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -8,12 +7,12 @@ class AppRouter {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => HomeScreen(),
+          builder: (_) => HomeView(),
         );
-      case '/profile':
-        return MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
-        );
+      // case '/profile':
+      //   return MaterialPageRoute(
+      //     builder: (_) => ProfileView(),
+      //   );
       default:
         return MaterialPageRoute(
           builder: (_) {

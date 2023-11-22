@@ -1,28 +1,35 @@
 import 'package:demo_provider_mvvm/src/common/app_config.dart';
 import 'package:demo_provider_mvvm/src/common/theme/app_theme.dart';
-import 'package:demo_provider_mvvm/src/modules/auth/view/login_screen.dart';
-import 'package:demo_provider_mvvm/src/modules/auth/viewmodels/auth_viewmodel.dart';
+import 'package:demo_provider_mvvm/src/modules/home/home_view.dart';
+import 'package:demo_provider_mvvm/src/modules/login/login_view.dart';
+import 'package:demo_provider_mvvm/src/modules/login/login_view_model.dart';
+import 'package:demo_provider_mvvm/src/modules/signup/signup_view_model.dart';
 import 'package:demo_provider_mvvm/src/routes.dart';
+import 'package:demo_provider_mvvm/src/utils/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeManager()),
-        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => LoginViewModel()),
+        ChangeNotifierProvider(create: (context) => SignUpViewModel()),
       ],
       builder: (context, child) {
-        var authViewModel = context.watch<AuthViewModel>();
+        var authProvider = context.watch<AuthProvider>();
 
         return FutureBuilder<bool>(
-          future: authViewModel.isLoggedIn(),
+          future: authProvider.checkIsLoggedIn(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               // Determine the initial route based on the login status
-              String initialRoute = authViewModel.isLogin ? '/' : '/login';
+              String initialRoute = authProvider.isLoggedIn ? '/' : '/login';
 
               if (initialRoute == '/') {
                 return MaterialApp(
@@ -32,7 +39,8 @@ class App extends StatelessWidget {
                   theme: AppTheme.light,
                   darkTheme: AppTheme.dark,
                   themeMode: context.watch<ThemeManager>().themeMode,
-                  initialRoute: initialRoute,
+                  // initialRoute: initialRoute,
+                  home: HomeView(),
                 );
               } else {
                 return MaterialApp(
@@ -40,7 +48,7 @@ class App extends StatelessWidget {
                   theme: AppTheme.light,
                   darkTheme: AppTheme.dark,
                   themeMode: context.watch<ThemeManager>().themeMode,
-                  home: LoginScreen(),
+                  home: LoginView(),
                 );
               }
             } else {
