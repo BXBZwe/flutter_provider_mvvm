@@ -1,4 +1,4 @@
-import 'package:demo_provider_mvvm/src/data/models/user_model.dart';
+import 'package:demo_provider_mvvm/src/data/models/user/user_model.dart';
 import 'package:demo_provider_mvvm/src/data/services/user_service.dart';
 import 'package:flutter/material.dart';
 

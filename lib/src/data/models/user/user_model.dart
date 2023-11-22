@@ -1,8 +1,35 @@
+// import 'package:hive_flutter/hive_flutter.dart';
+
+// part 'user_model.g.dart';
+
+// @HiveType(typeId: 32) // Make sure this typeId matches the one in the error
+// class UserModel extends HiveObject {
+//   @HiveField(0)
+//   late String username;
+
+//   @HiveField(1)
+//   late String password;
+
+//   @HiveField(2)
+//   String? fullName;
+
+//   @HiveField(3)
+//   String? email;
+
+//   UserModel({
+//     required this.username,
+//     required this.password,
+//     this.fullName,
+//     this.email,
+//   });
+// }
+
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'user_model.g.dart';
 
-@HiveType(typeId: 32) // Make sure this typeId matches the one in the error
+@HiveType(typeId: 32)
 class UserModel extends HiveObject {
   @HiveField(0)
   late String username;
@@ -11,7 +38,7 @@ class UserModel extends HiveObject {
   late String password;
 
   @HiveField(2)
-  String? fullName;
+  String? displayName; // Change 'fullName' to 'displayName'
 
   @HiveField(3)
   String? email;
@@ -19,7 +46,7 @@ class UserModel extends HiveObject {
   UserModel({
     required this.username,
     required this.password,
-    this.fullName,
+    this.displayName,
     this.email,
   });
 }

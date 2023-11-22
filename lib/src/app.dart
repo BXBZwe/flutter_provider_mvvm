@@ -2,8 +2,6 @@ import 'package:demo_provider_mvvm/src/common/app_config.dart';
 import 'package:demo_provider_mvvm/src/common/theme/app_theme.dart';
 import 'package:demo_provider_mvvm/src/modules/home/home_view.dart';
 import 'package:demo_provider_mvvm/src/modules/login/login_view.dart';
-import 'package:demo_provider_mvvm/src/modules/login/login_view_model.dart';
-import 'package:demo_provider_mvvm/src/modules/signup/signup_view_model.dart';
 import 'package:demo_provider_mvvm/src/routes.dart';
 import 'package:demo_provider_mvvm/src/utils/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +16,8 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeManager()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => LoginViewModel()),
-        ChangeNotifierProvider(create: (context) => SignUpViewModel()),
+        // ChangeNotifierProvider(create: (context) => LoginViewModel()),
+        // ChangeNotifierProvider(create: (context) => SignUpViewModel()),
       ],
       builder: (context, child) {
         var authProvider = context.watch<AuthProvider>();
