@@ -1,65 +1,78 @@
-import 'package:demo_provider_mvvm/src/data/models/user/user_model.dart';
-import 'package:demo_provider_mvvm/src/data/services/user_service.dart';
-import 'package:demo_provider_mvvm/src/modules/profile/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:demo_provider_mvvm/src/common/app_config.dart';
+import 'package:demo_provider_mvvm/src/utils/auth.dart';
 
 class ProfileView extends StatelessWidget {
-  final TextEditingController _displayNameController = TextEditingController();
-
-  ProfileView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ProfileViewModel>(
-          create: (context) => ProfileViewModel(
-            userService: Provider.of<UserService>(context),
-          ),
-        ),
-      ],
-      child: Consumer<ProfileViewModel>(
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Profile'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Provider.of<ThemeManager>(context).toggle
+                  ? Icons.light_mode
+                  : Icons.nightlight_round,
             ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Username: ${viewModel.currentUser?.username ?? ""}'),
-                  SizedBox(height: 20),
-                  Text(
-                      'Display Name: ${viewModel.currentUser?.displayName ?? ""}'),
-                  TextField(
-                    controller: _displayNameController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your display name',
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_displayNameController.text.isNotEmpty) {
-                        await viewModel.updateUserProfile(
-                          UserModel(
-                            username: viewModel.currentUser!.username,
-                            displayName: _displayNameController.text,
-                            password: '',
-                          ),
-                        );
-                        _displayNameController.clear();
-                      }
-                    },
-                    child: Text('Update Profile'),
-                  ),
-                ],
+            onPressed: () {
+              Provider.of<ThemeManager>(context, listen: false).setDark(
+                !Provider.of<ThemeManager>(context, listen: false).toggle,
+              );
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 70,
+              backgroundImage: NetworkImage(
+                'https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg',
               ),
             ),
-          );
-        },
+            SizedBox(height: 20),
+            Text(
+              'John Doe',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Software Developer',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(height: 20),
+            ListTile(
+              leading: Icon(Icons.email),
+              title: Text('john.doe@example.com'),
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('+1 (123) 456-7890'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                // Implement logout functionality
+                // For example, you can use Navigator to navigate to the login screen
+                await Provider.of<AuthProvider>(context, listen: false)
+                    .setLoginStatus(false);
+                Navigator.of(context).pop();
+              },
+              child: Text('Logout'),
+            ),
+          ],
+        ),
       ),
     );
   }

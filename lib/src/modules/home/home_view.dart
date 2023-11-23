@@ -1,7 +1,6 @@
 import 'package:demo_provider_mvvm/src/common/theme/app_theme.dart';
 import 'package:demo_provider_mvvm/src/common/theme/app_typography.dart';
 import 'package:demo_provider_mvvm/src/common/widgets/card_widget.dart';
-import 'package:demo_provider_mvvm/src/modules/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -28,7 +27,11 @@ class HomeView extends StatelessWidget {
             icon: const Icon(Icons.person),
             onPressed: () {
               // Use Navigator.push with MaterialPageRoute to navigate to ProfileView
-              MaterialPageRoute(builder: (context) => ProfileView());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => ProfileView()),
+              // );
+              Navigator.pushNamed(context, '/profile');
             },
           ),
         ],

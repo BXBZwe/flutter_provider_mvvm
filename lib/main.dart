@@ -12,16 +12,12 @@ globalInitializer() async {
     await Hive.openBox(boxName);
     Hive.registerAdapter(UserModelAdapter());
   } catch (error) {
-    print('Error initializing Hive: $error');
+    // print('Error initializing Hive: $error');
   }
 }
-
-// globalDispose() async {
-//   await Hive.close();
-// }
 
 void main() async {
   await globalInitializer();
 
-  runApp(App());
+  runApp(const App());
 }

@@ -21,7 +21,7 @@ class SignupView extends StatelessWidget {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Sign Up'),
+            title: const Text('Sign Up'),
           ),
           body: Center(
             child: AuthForm(

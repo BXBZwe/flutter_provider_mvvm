@@ -8,11 +8,13 @@ class UserService {
   Future<void> addUser(UserModel user) async {
     var userBox = await Hive.openBox<UserModel>(userDB);
     await userBox.add(user);
+    await userBox.close();
   }
 
   Future<List<UserModel>> getAllUsers() async {
     var userBox = await Hive.openBox<UserModel>(userDB);
     var users = userBox.values.toList();
+    await userBox.close();
     return users;
   }
 
@@ -22,6 +24,7 @@ class UserService {
     var userBox = await Hive.openBox<UserModel>(userDB);
     var users =
         userBox.values.where((user) => user.username == username).toList();
+    await userBox.close();
     return users.isNotEmpty ? users.first : null;
   }
 
@@ -32,6 +35,7 @@ class UserService {
       var index = userBox.keyAt(user as int);
       await userBox.putAt(index, updatedUser);
     }
+    await userBox.close();
   }
 
   Future<void> deleteUser(String username) async {
@@ -40,5 +44,6 @@ class UserService {
     if (user != null) {
       await userBox.delete(user.key);
     }
+    await userBox.close();
   }
 }

@@ -14,51 +14,37 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeManager()),
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
-        // ChangeNotifierProvider(create: (context) => LoginViewModel()),
-        // ChangeNotifierProvider(create: (context) => SignUpViewModel()),
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       builder: (context, child) {
         var authProvider = context.watch<AuthProvider>();
+        var themeManager = context.watch<ThemeManager>();
 
         return FutureBuilder<bool>(
           future: authProvider.checkIsLoggedIn(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              // Determine the initial route based on the login status
-              String initialRoute = authProvider.isLoggedIn ? '/' : '/login';
-
-              if (initialRoute == '/') {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  onGenerateRoute: (settings) =>
-                      AppRouter.generateRoute(settings),
-                  theme: AppTheme.light,
-                  darkTheme: AppTheme.dark,
-                  themeMode: context.watch<ThemeManager>().themeMode,
-                  // initialRoute: initialRoute,
-                  home: HomeView(),
-                );
-              } else {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: AppTheme.light,
-                  darkTheme: AppTheme.dark,
-                  themeMode: context.watch<ThemeManager>().themeMode,
-                  home: LoginView(),
-                );
-              }
-            } else {
-              // Show a loading indicator or splash screen while checking the login status
+            if (snapshot.connectionState != ConnectionState.done) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.light,
                 darkTheme: AppTheme.dark,
-                themeMode: context.watch<ThemeManager>().themeMode,
+                themeMode: themeManager.themeMode,
                 home: const CircularProgressIndicator(),
               );
             }
+
+            String initialRoute = authProvider.isLoggedIn ? '/' : '/login';
+
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
+              theme: AppTheme.light,
+              darkTheme: AppTheme.dark,
+              themeMode: themeManager.themeMode,
+              initialRoute: initialRoute,
+              home: initialRoute == '/' ? HomeView() : LoginView(),
+            );
           },
         );
       },
