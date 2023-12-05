@@ -1,2 +1,70 @@
-image: docker pull ghcr.io/cirruslabs/flutter:3.16.0
+stages:
+  - test
+  - analyze
+  - build-android
+  - build-ios
+  - beta
+  - release
 
+variables:
+  FLUTTER_VERSION: "3.10.3"
+  FASTLANE_LANE: "beta"
+
+code_quality:
+  stage: test
+  image: "ghcr.io/cirruslabs/flutter:$FLUTTER_VERSION"
+  before_script:
+    - flutter pub global activate dart_code_metrics
+    - export PATH="$PATH:$HOME/.pub-cache/bin"
+  script:
+    - metrics lib -r codeclimate > gl-code-quality-report.json
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+
+test:
+  stage: test
+  image: "ghcr.io/cirruslabs/flutter:$FLUTTER_VERSION"
+  before_script:
+    - flutter pub global activate junitreport
+    - export PATH="$PATH:$HOME/.pub-cache/bin"
+  script:
+    - flutter test --machine --coverage | tojunit -o report.xml
+    - lcov --summary coverage/lcov.info
+    - genhtml coverage/lcov.info --output=coverage
+  coverage: '/lines\.*: \d+\.\d+\%/'
+  artifacts:
+    name: coverage
+    paths:
+      - $CI_PROJECT_DIR/coverage
+    reports:
+      junit: report.xml
+
+analyze:
+  stage: analyze
+  image: "ghcr.io/cirruslabs/flutter:$FLUTTER_VERSION"
+  script:
+    - flutter analyze
+
+build:
+  stage: build
+  image: "ghcr.io/cirruslabs/flutter:$FLUTTER_VERSION"
+  script:
+    - flutter build apk # Add other build commands for iOS if needed
+  artifacts:
+    paths:
+      - build/
+
+beta:
+  stage: beta
+  script:
+    - echo "Deploy to Firebase for Beta testing"
+    # Add commands to deploy to Firebase for Beta testing
+
+release:
+  stage: release
+  script:
+    - echo "Deploy to store with fastlane"
+    - fastlane $FASTLANE_LANE # Replace with your actual Fastlane lane
+  only:
+    - master  # Only run the release stage on the master branch

@@ -52,16 +52,39 @@ android {
     }
 
     buildTypes {
-        // debug {
-        //     signingConfig signingConfigs.debug
-        // }
-        release {
+        debug {
             signingConfig signingConfigs.debug
+        }
+        release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        production {
+            dimension "default"
+            resValue "string", "app_name", "demo_provider_mvvm"
+            // versionCode 1.0
+            // versionName "1.0.0"
+        }
+        development {
+            dimension 'default'
+            applicationIdSuffix '.dev'
+            versionNameSuffix '.dev'
+            resValue "string", "app_name", "demo_provider_mvvm.dev"
+        }
+        uat {
+            dimension 'default'
+            applicationIdSuffix '.uat'
+            versionNameSuffix '.uat'
+            resValue "string", "app_name", "demo_provider_mvvm.uat"
+        }
+    }
+
 }
 
 flutter {
