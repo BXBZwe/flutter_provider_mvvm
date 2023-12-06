@@ -10,8 +10,8 @@ enum SignUpResult {
 class SignUpViewModel extends ChangeNotifier {
   late UserService _userService;
 
-  SignUpViewModel() {
-    _userService = UserService();
+  SignUpViewModel({required UserService userService}) {
+    _userService = userService;
   }
 
   Future<SignUpResult> signUp(String username, String password) async {

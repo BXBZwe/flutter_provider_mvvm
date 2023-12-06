@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 class LoginViewModel extends ChangeNotifier {
   late UserService _userService;
 
-  LoginViewModel() {
-    _userService = UserService();
+  LoginViewModel({required UserService userService}) {
+    _userService = userService;
   }
 
-  Future<bool> login(
-      BuildContext context, String username, String password) async {
+  Future<bool> login(String username, String password) async {
     UserModel? user = await _userService.getUserByUsername(username);
 
     if (user != null && user.password == password) {

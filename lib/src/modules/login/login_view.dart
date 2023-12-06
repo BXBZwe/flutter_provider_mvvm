@@ -4,6 +4,8 @@ import 'package:demo_provider_mvvm/src/utils/auth.dart';
 import 'package:demo_provider_mvvm/src/modules/login/login_view_model.dart';
 import 'package:demo_provider_mvvm/src/modules/signup/signup_view.dart';
 import 'package:demo_provider_mvvm/src/common/widgets/auth_form_widget.dart';
+import 'package:demo_provider_mvvm/src/locator.dart';
+import 'package:demo_provider_mvvm/src/data/services/user_service.dart';
 
 class LoginView extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -16,13 +18,14 @@ class LoginView extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginViewModel>(
-          create: (context) => LoginViewModel(),
+          create: (context) =>
+              LoginViewModel(userService: locator<UserService>()),
         ),
       ],
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Login'),
+            title: Text('Log in with your name and password'),
           ),
           body: Center(
             child: Column(
@@ -38,14 +41,13 @@ class LoginView extends StatelessWidget {
                     final viewModel =
                         Provider.of<LoginViewModel>(context, listen: false);
                     bool success = await viewModel.login(
-                      context,
                       _usernameController.text,
                       _passwordController.text,
                     );
 
                     if (success) {
                       await authProvider.setLoginStatus(true);
-                      // Navigator.pushReplacementNamed(context, '/');
+                      //Navigator.pushReplacementNamed(context, '/');
                     } else {
                       showDialog(
                         context: context,
@@ -66,6 +68,7 @@ class LoginView extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 TextButton(
+                  key: Key('signupButton'),
                   onPressed: () {
                     Navigator.push(
                       context,

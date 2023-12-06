@@ -3,6 +3,7 @@ import 'package:demo_provider_mvvm/src/common/global.dart';
 import 'package:demo_provider_mvvm/src/data/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:demo_provider_mvvm/src/locator.dart';
 
 globalInitializer() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,6 @@ globalInitializer() async {
 
 void main() async {
   await globalInitializer();
-
+  setupLocator();
   runApp(const App());
 }

@@ -11,6 +11,7 @@ class ProfileView extends StatelessWidget {
         title: Text('Profile'),
         actions: [
           IconButton(
+            key: Key('themeToggleButton'),
             icon: Icon(
               Provider.of<ThemeManager>(context).toggle
                   ? Icons.light_mode
@@ -31,9 +32,7 @@ class ProfileView extends StatelessWidget {
             SizedBox(height: 20),
             CircleAvatar(
               radius: 70,
-              backgroundImage: NetworkImage(
-                'https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg',
-              ),
+              backgroundImage: AssetImage('assets/images/Funny-Cat-Hidden.jpg'),
             ),
             SizedBox(height: 20),
             Text(

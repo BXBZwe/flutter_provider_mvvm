@@ -1,25 +1,30 @@
-FLUTTER := flutter
+FLUTTER = flutter
+DART = dart
 
-.PHONY: help analyze test build
+.PHONY: help analyze test build clean
 
 help:
 	@echo "Available targets:"
 	@echo "  test           Run tests"
+	@echo "  analyze        Analyze code"
 	@echo "  build          Build APK"
+	@echo "  build-ios      Build IPA"
 
-all: analyze test build
+clean:
+	@echo "Cleaning..."
+	$(FLUTTER) clean
 
 analyze:
 	@echo "Running flutter analyze"
-	flutter analyze
+	$(FLUTTER) analyze
 
 test:
 	@echo "Running flutter test"
-	flutter test
+	$(FLUTTER) test
 
 build:
-	@echo "Running flutter build"
-	flutter build apk --release
+	@echo "Running flutter analyze..."
+	@$(FLUTTER) analyze || { echo "Flutter analyze found issues. Fix them before building."; exit 1; }
 
-# check:
-# 	- flutter analyze --no-fatal-infos --no-fatal-warnings || true
+	@echo "Running flutter build"
+	$(FLUTTER) build apk --release

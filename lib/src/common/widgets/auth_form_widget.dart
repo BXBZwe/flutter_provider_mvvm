@@ -24,6 +24,7 @@ class AuthForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
+            key: Key('Username'),
             controller: usernameController,
             style: AppTypography.body,
             decoration: InputDecoration(
@@ -36,6 +37,7 @@ class AuthForm extends StatelessWidget {
           ),
           SizedBox(height: 16),
           TextField(
+            key: Key('Password'),
             controller: passwordController,
             style: AppTypography.body,
             decoration: InputDecoration(
@@ -49,6 +51,7 @@ class AuthForm extends StatelessWidget {
           ),
           SizedBox(height: 20),
           ElevatedButton(
+            key: Key('Auth'),
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.fuschia,

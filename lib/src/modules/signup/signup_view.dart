@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:demo_provider_mvvm/src/common/widgets/auth_form_widget.dart';
 import 'package:demo_provider_mvvm/src/modules/signup/signup_view_model.dart';
+import 'package:demo_provider_mvvm/src/locator.dart';
+import 'package:demo_provider_mvvm/src/data/services/user_service.dart';
 
 class SignupView extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -14,14 +16,15 @@ class SignupView extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<SignUpViewModel>(
-          create: (context) => SignUpViewModel(),
+          create: (context) =>
+              SignUpViewModel(userService: locator<UserService>()),
         ),
         // Add any other providers you might need for this view
       ],
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Sign Up'),
+            title: const Text('Create new account'),
           ),
           body: Center(
             child: AuthForm(
