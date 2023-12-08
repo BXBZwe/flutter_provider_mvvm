@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:demo_provider_mvvm/src/data/services/user_service.dart';
+import 'package:demo_provider_mvvm/src/modules/login/login_view_model.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -9,9 +10,9 @@ void setupLocator({UserService Function()? userServiceFactory}) {
     () => userServiceFactory?.call() ?? UserService(),
   );
   // Register other services here
-  // locator.registerFactory(
-  //   () => LoginViewModel(userService: locator<UserService>()),
-  // );
+  locator.registerFactory(
+    () => LoginViewModel(userService: locator<UserService>()),
+  );
   // locator.registerFactory(
   //   () => SignUpViewModel(userService: locator<UserService>()),
   // );
