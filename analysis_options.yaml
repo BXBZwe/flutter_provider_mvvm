@@ -1,0 +1,75 @@
+# include: package:flutter_lints/flutter.yaml
+
+# linter:
+
+#   rules:
+#     # Formatting and Style
+#     prefer_single_quotes: true
+#     prefer_final_fields: true
+#     lines_longer_than_80_chars: true
+#     indent: 2
+
+#     # Naming Conventions
+#     camel_case_types: true
+#     camel_case_extensions: true
+
+#     # Code Organization
+#     sort_pub_dependencies: true
+#     always_specify_types: true
+#     prefer_constructors_over_static_methods: true
+
+#     # Documentation
+#     public_member_api_docs: true
+
+#     # Avoid Unused Code
+#     unused_import: true
+#     unused_local_variable: true
+#     unused_field: true
+
+#     # Null Safety (if using null safety)
+#     avoid_as: true
+#     prefer_null_aware_operators: true
+#     implicit_dynamic: false  # Recommend turning off implicit_dynamic for null safety
+
+#     # Flutter-Specific Rules
+#     prefer_const_constructors: true
+#     use_key_in_widget_constructors: true
+#     flutter_sort_constructors_first: true
+#     always_put_required_named_parameters_first: true
+#     prefer_const_literals_to_create_immutables: true
+#     prefer_final_locals: true
+#     avoid_redundant_argument_values: true
+#     unnecessary_null_in_if_null_operators: true
+#     prefer_if_null_operators: true
+#     prefer_expression_function_bodies: true
+
+# analyzer:
+
+#   errors:
+#     # Specify the rules you want to enforce as errors
+#     prefer_single_quotes: error
+#     prefer_final_fields: error
+#     lines_longer_than_80_chars: error
+#     indent: error
+#     camel_case_types: error
+#     camel_case_extensions: error
+#     sort_pub_dependencies: error
+#     always_specify_types: error
+#     prefer_constructors_over_static_methods: error
+#     public_member_api_docs: error
+#     unused_import: error
+#     unused_local_variable: error
+#     unused_field: error
+#     avoid_as: error
+#     prefer_null_aware_operators: error
+#     implicit_dynamic: error
+#     prefer_const_constructors: error
+#     use_key_in_widget_constructors: error
+#     flutter_sort_constructors_first: error
+#     always_put_required_named_parameters_first: error
+#     prefer_const_literals_to_create_immutables: error
+#     prefer_final_locals: error
+#     avoid_redundant_argument_values: error
+#     unnecessary_null_in_if_null_operators: error
+#     prefer_if_null_operators: error
+#     prefer_expression_function_bodies: error
